@@ -1,0 +1,431 @@
+已核对附件 c6d7210a-d529-4ffa-97d6-c947cbea2db6.zip。
+包内 manifest.json 所列 13/13 个 .md / .json / .jsonl 均已读取；两个 JSON 与 claims.jsonl 均可解析。22 条 claim 的状态分布是：accepted=5、verified=9、observed=4、open=3、parked=1。
+
+Owner 级结论：OVA 应成为“单向构建编译器 + 本地归因证据系统”，而不是又一个运行时解锁包。
+
+A. 我读懂了没有
+OVA 是 dev.ova.protection 的 VPM/NDMF 构建插件，ova-web 位于 http://127.0.0.1:17849/。
+它只改 NDMF 上传克隆，不改源场景，不进入观看者进程。
+核心目标是让 Path A 拆包后的工程失去语义与分件便利，同时给泄漏网格留下可验证归因。
+Path A 是磁盘上的 .vrca 经平台层处理后成为 Unity 工程；合网格、合图、改名、decoy、水印在这里有价值。
+Path B 是已经在观看者进程/GPU 中正确画出的几何；OVA 无法关闭，水印最多尝试归因。
+观看者 cache AES 与 UnityPlayer bundle 缝都不由 OVA 控制。
+作者 OSC/Shader 解锁钥可以放，但会增加 bit、Shader、OSC、Safety、Quest 和检测表面，且仍不关闭 Path B。
+因而 OVA 默认不应放第三把解锁钥，而应把精力放在“最终克隆去语义化、引用闭包、可测劳动、离线 keyed 水印”。
+B. 对现码的判断
+范围	判断	证据边界
+Clone-only 产品边界	闭合	IEditorOnly 组件被移除，只处理 NDMF clone；未装入 D:\Project\Unity\kaguya。
+L2 Hierarchy / blendshape / controller / parameter / asset 改名	已覆盖字段内基本闭合	Robot bake、SDK preprocess、viseme 槽与 FT 词边界都有直接证据；但不能据此声称所有组件字符串和引用均闭包。
+无已知锁指纹	闭合，但不是防盗证据	_BitKey、DexProtect、_IsLocked grep 为零，只能说明 OVA 不是这些运行时锁。
+AAO 合网格	Robot 上成立	2 个 SMR 变成 1 个；没有真实分件裙子、复杂换装与衣服骨架证据。
+TTT atlas	Robot 上成立	两张 Body 图变为一张共享 2048；未证明复杂透明材质、法线、多个 Shader 属性和真实换装。
+decoy blendshape	实现成立，产品语义未闭合	Robot 上 23→31；当前实际是“每个 SMR 加 N 个”，不是明确的“全头像总预算”。
+MMD Body	明确 gap	compose 后 BodyGo=False；当前启发式没有在最终 merged clone 上找到应保留的那一个 renderer。
+Humanoid 重名骨 / PhysBone / PPtr	局部代码存在，系统证据不足	Chest 误保留修复是好信号，但未证明裙子骨、SyncedLayer、Contacts、Constraints、Audio 等完整闭包。
+Animator SyncedLayer / override motion	unproven	Robot 的 clipCurves=0，没有真正打到这条路径。
+水印	只有 Editor seeded perturbation，不是完整 keyed attribution	当前固定幅度 ±1e-5、默认公开 seed 5145514；未验证上传存活，也没有可靠的容错解码和伪造边界。
+ova-fp-v1	不够作为归因证据	未绑定实际 mesh 内容、build、插件状态和作者秘密；相同四字段即可碰撞。
+ova-web 概览	存在可信度 gap	Scene probe 可显示参数 0/8，实际 bake 为 renamed=2。
+live Publish → 作者自有产物复核	blocked	SDK 仅跑到 preprocess，OTP 阶段失败；没有闭合端到端 Path A 与上传后水印。
+VPM listing zip	对外是产品 bug，根因是发行纪律	0.2.0 zip 缺当前 FT、viseme、decoy、i18n.js、pack.js 等工作树内容。
+Attest Hop B	parked，不应偷偷恢复	501 是 Owner 决策；远程 gist 也不能成为观看者解锁门。
+
+所以独立审查给出 blocked 是正确的，但 blocker 不是“Path B 仍然存在”——Path B 是已接受的残余。真正没有闭合的是：
+
+真实结构头像上的引用闭包与劳动效果；
+上传后 keyed 水印的存活与可验证性；
+实际交付的 VPM zip 与工作树一致。
+C. 想法清单
+idea-01 — slice-reference-closure-fixture
+
+layer: process · path: A · already_in_ova: partial · effort: M
+depends_on_owner: 不需要点 SDK；只允许写 D:\Project\Unity\test。
+stop_line_risk: 低；不得读取辉夜、迁移 SaoMoLa 或执行 Publish。
+
+why_cheap_for_ripper_today: 当前 Robot 没有真裙子、分件换装、SyncedLayer override、复杂动画曲线和完整 PhysBone/Contact 引用。现有测试可能同时漏掉“语义仍可读”和“改名后引用坏掉”。
+
+what_changes_after: 建立一只非敏感的 OVA_ReferenceAvatar，至少包含：
+
+Body、Head、Top、Skirt、Accessory 等多个 SMR；
+一组可被 AAO 合并、一组因动画或材质约束保持分离的网格；
+MMD shapes 与最终 Body 需求；
+真 Humanoid Chest，以及 Dynamics/Chest 重名骨；
+nested BlendTree、Direct BlendTree、transition condition；
+一个 SyncedLayer，带 override motion 与 timing 设置；
+float curve、object-reference curve、材质切换、Audio 引用；
+VRCPhysBone、Contacts、Constraints、Station/Transform PPtr；
+一个 expected-fixture.json，记录哪些名称必须改、哪些必须留、哪些引用必须继续解析。
+
+why_not: 这本身不增加攻击成本；它的价值是阻止 OVA 用 Robot 纸证误判产品已经闭合。
+
+test_failure: 任一动画 binding 无法解析、motion 数量变化、错误的 Dynamics 分支被保留、原店名残留、MMD Body 缺失或最终可见行为与基线不同，即失败。
+
+idea-02 — slice-mmd-body-anchor
+
+layer: L2 · path: A · already_in_ova: partial · effort: S/M
+depends_on_owner: 开启 preserveMmdBody；候选不唯一时由 Owner 在 ova-web pin 一次。
+stop_line_risk: 低。
+
+why_cheap_for_ripper_today: 当前两种坏结果二选一：要么最终 clone 没有 Body，MMD 世界不兼容；要么为了保留 Body 使用宽泛名称规则，顺便给拆包者留下整支结构线索。
+
+what_changes_after: 不再按“名称与 shape 数量启发式”宽泛保留，而是在 AAO/TTT 完成后的最终 clone 上：
+
+优先取 VRCAvatarDescriptor.VisemeSkinnedMesh 对应的最终 renderer；
+检查它是否具备足够的 MMD/viseme 形态；
+只把该 renderer 所在的一个 Transform 最终命名为字面量 Body；
+不因此保留父级、兄弟、Dynamics 或任何其他名为 Body 的对象；
+候选不唯一时拒绝猜测，要求 mmdBodyTarget pin；
+在 build report 中记录 preservedReason=mmd-body-anchor。
+
+why_not: 这是一个兼容性上的有意明文泄漏，应保持 opt-in；非 MMD 头像没有理由留下 Body。
+
+test_failure: 最终不是“恰好一个带目标 SMR 的 Body”、出现第二个可读 Body、Dynamics/Chest 被误留，或 visemeMiss>0，即失败。
+
+idea-03 — slice-decoy-budget-v2
+
+layer: L2 · path: A · already_in_ova: partial · effort: S
+depends_on_owner: 无。
+stop_line_risk: 低。
+
+why_cheap_for_ripper_today: 当前 decoyBlendShapeCount=N 实际按每个 SMR 增长。对未合网格头像，体积和 shape 数会不可预测地倍增；对拆包者则仍可通过动画引用关系筛掉大部分 decoy。
+
+what_changes_after: 把设置语义改成每个头像的总预算：
+
+Normal 默认总计 8；
+Expert 上限 32 总计，不是每 mesh 32；
+AAO 合并后优先投到最终主 carrier mesh；
+未合并时按顶点数与已有 shape 容量分配，并设置单 mesh 上限；
+所有 decoy 只 append，绝不插入现有 shape 前面，因此现有 index 不移动；
+避免 vrc.*、descriptor viseme、MMD 保留名；
+实际分配结果写入 build report。
+
+why_not: decoy 只是 triage noise，不是锁。不能宣传为“无法还原”；针对性工具仍可根据动画引用和 delta 特征过滤。
+
+test_failure: 总数超过预算、任一原 blendshape index 改变、descriptor viseme 失配、包体或 blendshape delta 成本超过设定阈值，即失败。
+
+idea-04 — slice-final-clone-reference-audit
+
+layer: L2 · path: A · already_in_ova: partial · effort: M/L
+depends_on_owner: 无。
+stop_line_risk: 低；禁止把审计器做成对未知字段的全局字符串替换器。
+
+why_cheap_for_ripper_today: 改名器最危险的不是“少改一个名字”，而是两端同时失败：旧语义残留给拆包者当路标，或引用断裂迫使 Owner 关闭保护。
+
+what_changes_after: 在 pass 前后建立 reason-coded ledger：
+
+Humanoid 保留集合只由实际 Animator.GetBoneTransform(...) 返回的 Transform 实例及必要祖先组成，不按字符串 Chest 扩散；
+eyes、jaw、MMD pinned target 分别记录理由；
+检查 Animator parameters、conditions、BlendTrees、SyncedLayer override motion、StateMachineBehaviour 字符串；
+检查 AnimationClip float/object-reference bindings；
+检查菜单、Expression Parameters、PlayAudio、PhysBone、Contacts、Constraints、Station 和 Audio 等引用；
+PPtr 只验证是否仍指向 clone 中合法对象，不把它当字符串路径改写；
+每个保留参数都必须有 reason，否则作为语义泄漏报警；
+PhysBone 审计至少识别当前官方定义的 _IsGrabbed、_IsPosed、_Angle、_Stretch、_Squish 五个派生后缀；现有 prefix_* 可先作为兼容模式，而不是立即激进收紧。
+
+why_not: 对所有 SerializedObject 字符串自动替换会误改用户文本、URL、动画事件参数或第三方内部协议。第一刀应是“发现、归因、阻断 release”，再为确认过的字段增加窄 rewrite。
+
+test_failure: 出现 unresolved binding/PPtr、错误对象因同名被保留、任一原始敏感 token 无合理保留原因地出现在最终 clone，即失败。
+
+idea-05 — slice-readable-surface-report
+
+layer: L2 · path: A · already_in_ova: no · effort: S/M
+depends_on_owner: 无。
+stop_line_risk: 低。
+
+why_cheap_for_ripper_today: 即使所有 GameObject 和 asset name 都变成 ÌÍÎÏ，material slot 数量、submesh 边界、Shader 家族、贴图槽分布与动画材质切换仍可能直接透露“哪块是衣服、脸、头发”。
+
+what_changes_after: 在最终 clone 上输出本地 surface inventory：
+
+SMR、submesh、material slot、独立纹理和 atlas 数；
+每个材质使用的 Shader 家族；
+MainTex 之外仍引用的 normal、mask、emission、outline 等纹理槽；
+动画引用的 material/property；
+merge/atlas 前后差异；
+“仍然容易按件取出”的结构警告。
+
+同时设硬边界：**OVA 不改 Shader.name、Shader keyword 或 property ID。**这些是 Shader ABI 与动画 binding 的一部分；重写它们等于进入 Shader 源码改造和全引用迁移，兼容风险远大于劳动收益。
+
+why_not: 这是报告与决策层，不会直接隐藏几何；也不能把“Shader 名字被看见”误写成安全失败。
+
+test_failure: 报告显示低泄漏，但 fixture 仍存在明显分件、独立贴图和原始材质语义；或 OVA 实际改动了 Shader ABI，即失败。
+
+idea-06 — slice-watermark-v2-evidence
+
+layer: L7 · path: both · already_in_ova: partial · effort: L
+depends_on_owner: 创建并备份一个本地 attribution root secret；选择每次 upload/build 的 profile。
+stop_line_risk: 低。该 secret 永不进入 avatar、永不恢复几何，不是第四把运行时解锁钥。
+
+why_cheap_for_ripper_today: 当前更准确的名称是“seeded vertex perturbation”。默认 seed 公开、固定幅度、按 vertex index 选符号；ova-fp-v1 又不绑定实际 mesh/build，无法支撑抗碰撞、抗伪造的归因链。
+
+what_changes_after:
+
+把 names.seed 与 attribution secret 完全拆开；改名 seed 可以公开且可复现，水印 secret 必须本地生成。
+每个 avatar/build 生成唯一 markId，由本地 secret、avatar stable ID、build nonce 和最终 carrier mesh digest 分域派生。
+carrier 选择不只依赖原始 vertex index，而依据可重新 canonicalize 的空间/局部几何特征；以免简单 vertex reorder 立即抹掉定位。
+采用 spread-spectrum / error-correcting repetition，将短 payload 与认证 tag 分散到大量 carrier。
+幅度按 mesh bounds、局部边长和实测量化 margin 自适应，而不是所有 mesh 固定 1e-5。
+默认避开 face、eyelid、viseme 高活动区、边界 seam、尖锐轮廓和过低顶点数 mesh。
+输出 ova-evidence-v2.json，至少包含：markId、handle hash、build ID、package version、git commit、settings digest、pre/post canonical mesh digests、scheme version、carrier count、amplitude policy、verification result 与签名。
+ova-fp-v2 应是 canonical evidence manifest 的摘要，而不是 seed 加三个字段。
+本地 verifier 只接收 Owner 已持有的 suspect mesh，输出 decode confidence、有效 carrier 数和 evidence 匹配项。
+每次私有 upload/profile 使用独立 markId；配合 Private avatar + 私人实例，能把泄漏范围缩到具体 build，而不是幻想阻断 Path B。
+
+媒介优先级应是：
+
+**第一选择：**最终 geometry 上的自适应 basis watermark；
+**第二选择：**只有确认 UV channel 未被 TTT、Shader 或 gimmick 使用时，才把 UV mark 当辅助通道；
+**hidden quad：**最多做第二证据或肉眼 ownership 标记，容易被找到和删除，不能当核心；
+**topology hash：**只是一条登记指纹，不是嵌入式水印。
+
+why_not: 任意重拓扑、强平滑、大幅 decimation 都可能杀死几何水印；Path B 捕获的是动画后/world-space 几何时，检测成功率也不能先承诺。只有本地签名还不能提供独立第三方时间证明。
+
+test_failure: 未标记 control 出现高置信度、两个 build 重复 markId、修改 evidence 后仍验证通过、正常观察可见形变、vertex reorder 后完全无法定位，或 root secret 丢失后没有恢复方案，即失败。
+
+idea-07 — slice-watermark-upload-calibration
+
+layer: L7 · path: both · already_in_ova: no · effort: M
+depends_on_owner: 人点一次 SDK，上传私有 sacrificial test avatar；随后只把作者自有 post-upload artifact 交给本地 verifier。
+stop_line_risk: 低；不提供 cache、扫钥或拆包操作教程。
+
+why_cheap_for_ripper_today: Editor 中打印“watermark applied”不能回答 VRChat build/upload 路径是否保留微扰。
+
+what_changes_after: 准备一只 calibration avatar：
+
+一个明确未标记的 control mesh；
+多个使用不同 normalized amplitude/ECC policy 的 carrier group；
+上传前完整 evidence；
+人完成 Publish 后，用作者自有产物运行同一 verifier；
+得出每种 mesh scale 下的 survival、false positive、可见形变和最低可靠幅度；
+在完成前，UI 必须显示 watermarkStatus=editor-only-unverified，不得显示“可归因”。
+
+why_not: 一次上传不能证明所有 mesh 尺度、法线和压缩条件；最终算法仍需要逐 mesh margin。
+
+test_failure: control 被判有水印、当前 1e-5 结果接近随机、可靠方案出现可见表面噪声，或 post-upload carrier 数不足，即失败并回到 idea-06 调参。
+
+idea-08 — compose-aao-ttt-labor-baseline
+
+layer: compose · path: A · already_in_ova: partial · effort: S/M
+depends_on_owner: 在 D:\Project\Unity\test 安装并启用 AAO/TTT；OVA 不复制其实现。
+stop_line_risk: 低。
+
+why_cheap_for_ripper_today: 未合并衣服、独立 UV 与独立贴图让拆包后的资产仍接近商店原件，改名只能遮住标签。
+
+what_changes_after: 把 AAO/TTT 定义为推荐的 Labor Baseline，而不是“加密”：
+
+OVA 检测是否存在 compose；
+build report 给出 SMR、submesh、material、texture 前后指标；
+idea-01 的真实 fixture 验证裙子、换装、透明材质与 animation toggle；
+OVA 明确在它们之后处理最终 geometry 和 asset graph；
+idea-02 负责修补合并后的 MMD Body。
+
+why_not: AAO/TTT 是优化器，不是锁；某些 animated materials、换装和透明材质不能安全合并，也可能出现视觉/UV 回归。
+
+test_failure: toggle 行为变化、透明或法线结果异常、Body 丢失、合并指标没有变化却无解释、包体或性能明显倒退，即失败。
+
+idea-09 — compose-shell-texture-tier
+
+layer: compose · path: A · already_in_ova: no · effort: M
+depends_on_owner: 只在 D:\Project\Unity\test 安装 ShellProtector，并明确接受 OSC/参数/Shader 运行时依赖。
+stop_line_risk: 中；只能作为 optional compose，不能成为 OVA 默认使命。
+
+why_cheap_for_ripper_today: 合图之后，最终 atlas 仍可能作为完整可复用贴图直接出现。
+
+what_changes_after:
+
+目标语义顺序为 MA/VRCFury → AAO → TTT → OVA → Shell，但必须用实际 NDMF plugin ID 与 bake 证明，不能只靠文档猜；
+Shell 只承担最终 atlas 的 texture tier，关闭或避免与 OVA 重叠的 blendshape obfuscation；
+记录启用前后的 synchronized parameter memory，硬性对照 VRChat 当前 256-bit 上限；
+只在 test 验证 lilToon 2.3.4、最终 atlas、各 texture format 与普通观看条件；
+ova-web 必须标成“runtime author-key compose；不关闭 Path B”。
+
+Shell 当前文档声称支持 lilToon 1.3.8–2.3.4，并依赖 OSC/password 流程；BC7 不支持，parameter multiplexing 与同步失败也被厂商明确列为现实风险。VRChat 当前同步自定义参数总预算为 256 bits。
+
+why_not: 它会重新引入作者运行时钥、OSC 常驻、参数占用、Safety/动画可见性和格式限制；因此不符合 OVA 默认“无作者解锁钥”的产品身份。
+
+test_failure: 加密的不是 TTT 最终 atlas、产生双重 blendshape 改写、参数预算超限、其他观看者无法在声明条件下正常显示、watermark/name map 被后续 pass 改坏，即失败。
+
+idea-10 — compose-ajisai-quarantine
+
+layer: compose · path: A · already_in_ova: no · effort: S/M
+depends_on_owner: 只有在 OVA 自身 blocker 关闭后，才允许对附件锁定的 0.50.0 做 test-only vendor review。
+stop_line_risk: 中高；可能引入 runtime unlock client、尖刺显示与重复混淆层。
+
+why_cheap_for_ripper_today: Ajisai 宣称的多层处理可能增加 Path A 噪声，但目前 OVA 没有独立证据证明其实际 package、顺序和兼容性。
+
+what_changes_after: 先建立 quarantine matrix，而不是把它写进默认推荐：
+
+固定 package checksum/version；
+记录 NDMF order；
+记录参数增量与 Shader/动画依赖；
+比较 texture property 覆盖；
+检查 optimizer 兼容、watermark survival、显示与 fallback；
+若仅测试 OVA 兼容，优先关闭需要运行时解锁的视觉保护项。
+
+其官方 BOOTH 页面仍明确标为 α，承认无法阻止抽取，并列出有限 texture property 支持、解锁同步失败、NDMF 优化器兼容问题以及尖刺状态可能增加渲染成本。
+
+why_not: 现在测试它的信息增益低于 idea-01/06；而且它会模糊“哪些能力属于 OVA、哪些属于 vendor runtime lock”。
+
+test_failure: plugin order 不稳定、无客户端解锁时不能正常显示、参数冲突、视觉尖刺、OPAQUE package 无法审计，或破坏 OVA 水印，即停止 compose。
+
+idea-11 — slice-build-report-v1
+
+layer: process · path: A · already_in_ova: partial · effort: M
+depends_on_owner: 无。
+stop_line_risk: 低。
+
+why_cheap_for_ripper_today: ova-web 当前把 scene probe 的估算数字展示得过于像最终 build 事实；0/8 对 renamed=2 已证明这会产生错误安全感。
+
+what_changes_after:
+
+UI 分成 Estimated from Scene 与 Measured from Last NDMF Clone；
+OVA pass 写 Library/OVA/last-build-report.json；
+report 包含 avatar/source/settings digest、package version、时间、rename/preserve reason 计数、unresolved references、AAO/TTT 前后指标、decoy 实际数、watermark carrier/status、known lock fingerprint 状态；
+source、settings 或 package 变化后，旧 report 自动标 stale；
+不再为了“数字一致”在 ova-web 中重写一个假的 NDMF virtual controller。
+
+why_not: 报告不增加保护，但它决定产品是否诚实，并为每个 named slice 提供可证伪结果。
+
+test_failure: UI 在没有实际 build report 时仍显示“最终结果”、report 与 pass 日志不一致、source 变化后不标 stale，即失败。
+
+idea-12 — repair-vpm-artifact-parity
+
+layer: process · path: neither · already_in_ova: partial · effort: S
+depends_on_owner: Owner 明确说 repair。
+stop_line_risk: 低；不得顺手设计新 VPM 商店或用 PAT 托管私有下载。
+
+why_cheap_for_ripper_today: 实际用户若装到落后的 zip，工作树中所有 FT、viseme、decoy、UI 和修复都等于不存在。
+
+what_changes_after:
+
+对外定性：这是 shipping product bug；
+内部根因：缺少 release artifact discipline；
+每个修改 Packages/dev.ova.protection/ 或 wwwroot 且准备交付的 slice，其 Definition of Done 必须包括：
+compile-check.ps1；
+pack-vpm.ps1；
+解压 zip 后逐文件 content manifest 对比；
+package.json、listing、source commit/version 一致；
+host 与 shipping wwwroot hash 一致；
+dirty shipping files 或 hash mismatch 时拒绝标 release；
+self-hash 只能证明“zip 没变”，不能证明“zip 等于工作树”。
+
+why_not: 这是独立 repair mission；不应与 watermark 或 fixture feature 同窗并行，以免重新制造一个难审计的混合变更。
+
+test_failure: zip 缺任一 required file、版本不一致、manifest 只验证旧 zip 自己、或工作树变化后检查仍绿，即失败。
+
+idea-13 — reject-no-key-vertex-lock
+
+layer: L4 · path: A · already_in_ova: no · effort: S
+depends_on_owner: 无。
+stop_line_risk: 高；若把弱技巧包装成“加密”就撞产品停线。
+
+why_cheap_for_ripper_today: 当前 basis 正常，针对性提取可直接得到几何；所以“有没有零 bit、原 lilToon 的乱序方案”表面上很诱人。
+
+what_changes_after: 先把理论说准确：
+
+若磁盘 basis 真被打乱，而观看者又能看见正确几何，逆变换必然存在于 Shader、Animator/blendshape、骨骼/skin、参数或客户端代码之一；
+在不换 Shader、无 Animator/bone 逆变换、无参数、无客户端代码的条件下，正确渲染不可能发生；
+确实存在一个弱反例：把逆变换塞进 always-on corrective blendshape 或骨骼结构，零 synced bit、无需换 Shader；
+但它的完整逆变换与规则就在同一 bundle 内，只能阻挡“只看 basis 的朴素工具”，针对性工具可直接求值；关闭 custom animations 时还可能变成刺猬；
+因而最多诚实标为 L1.5 self-contained puzzle，不能标为 L4 lock，也不值得成为下一刀。
+
+Kanna 当前官方方案之所以更强，正是因为它使用自定义 Shader 与运行时 key；默认占用 key bits，当前支持列表也没有 lilToon。
+
+why_not: 弱反例带来的兼容、安全显示和维护成本，很可能高于它对定向 Path A 工具增加的劳动；更挡不住 Path B。
+
+test_failure: 任何“反例”必须同时展示：磁盘 basis 错乱、原 lilToon、零运行时逆变换/参数、远端正确显示、且定向恢复不只是应用同 bundle 内的显式 correction。做不到就不是强反例。
+
+idea-14 — docs-three-keys-and-no-fantasy
+
+layer: docs · path: neither · already_in_ova: partial · effort: S
+depends_on_owner: 无。
+stop_line_risk: 若不做则高，容易重新漂向 SaoMoLa 对抗或运行时锁。
+
+why_cheap_for_ripper_today: 错误口号会让实现代理把大量时间花在 OVA 永远够不到的层。
+
+what_changes_after: 在 docs 与 ova-web 固化五条负面契约：
+
+“有 OVA 源码也拿不到 avatar key”是偷换概念：平台 cache AES 和 UnityPlayer key 本来就不在 OVA 源码里；这不等于 OVA 保护了它们。
+“切模时 HTTP 验证再给网格”不是 avatar 能力。VRChat 当前只允许白名单 avatar components；任意 custom scripts 不工作并可能阻止上传。
+修改 GameAssembly、进程内 mesh 或 EAC 属于客户端/平台安全，不属于 VPM/NDMF。
+没有 _BitKey0..31、DexProtect、_IsLocked 只代表“未被这张 detector table 分类”，不代表没有或具有保护。
+Path B 永远显示为 open residual；任何 feature 文案都不得覆盖这一状态。
+
+why_not: 它不是 feature，但能阻止产品使命漂移，并让实现代理知道哪些提案必须立即停止。
+
+test_failure: 任一 UI、README 或营销文字出现“100%”“隐藏平台 key”“观看者联网后才给 mesh”“关闭 Path B”或“未命中检测表=安全”，即失败。
+
+09-questions.md 覆盖映射
+问题	结论落点
+1 MMD Body	idea-02
+2 decoy 预算与 viseme index	idea-03
+3 SyncedLayer fixture	idea-01、idea-04
+4 Shader/material 可读面	idea-05
+5 Humanoid 与重复骨名	idea-01、idea-04
+6 Audio/PhysBone/PPtr	idea-01、idea-04
+7–9 水印、fp-v2、本地 evidence	idea-06、idea-07
+10 Shell compose	idea-09
+11 Ajisai 是否现在测试	idea-10：现在不优先
+12 无 Shader/32bit 顶点乱序	idea-13：弱 puzzle 有，强 lock 没有
+13–16 四种幻想	idea-14
+17 不上传也能证明什么	idea-01、idea-11
+18 listing zip	idea-12
+19 私有 Git/PAT VPM 主机	idea-12 明确否决
+D. 不该做的清单
+路线	为什么是幻想、停线或错误优先级	替代
+在 OVA 中“藏住观看者 cache AES”	OVA 不运行于观看者 GameAssembly；把平台钥与作者构建变换混为一谈	L0 分发控制、L1/L2 劳动、L7 归因
+观看者 HTTP 验证后才给 mesh	avatar 无任意作者 C# 网络客户端；即使外部 OSC 给 key，正确几何仍进入 Path B	本地 evidence export；HTTP 不参与显示
+在别人内存里保持 mesh 混淆	要么是客户端注入/EAC 领域，要么最终 Shader/GPU 仍产生正确几何	只做 Path A；对 B 诚实写 residual
+原 lilToon、零 bit、零逆变换的强顶点锁	没有逆变换就无法正确显示；有同 bundle 逆变换则不是 secret	AAO/TTT + L2；弱 puzzle 不优先
+自写未获支持的 lilToon vertex unlock Shader	撞明确停线，并把 OVA 变成维护 Shader fork 的产品	可选 Shell texture compose；不碰 L4
+改 Shader.name、keywords、property IDs	这些是 ABI/动画 binding，破坏风险远大于去语义化收益	idea-05 只审计，不改写
+把 Shell/Ajisai 代码重写进 OVA	重复 vendor 工作、引入作者钥、扩大红蓝边界	只 compose，明确版本、顺序和代价
+hidden quad 当主要水印	很容易被定位、删除或优化掉	robust basis mark；quad 仅辅助
+texture LSB 当主要水印	上传与纹理压缩高度可能摧毁低位	geometry watermark + 上传校准
+topology hash 冒充水印	只登记已有结构，没有嵌入 payload；复制/改拓扑即变化	作为 evidence 中的辅助 digest
+恢复 GitHub/Gitee Hop B 作为“远程验证”	远程 publish 不能变成观看者显示门；还增加 PAT 与隐私面	signed local ova-evidence-v2.json
+代理安装或修改 D:\Project\Unity\kaguya	明确封存停线，也会污染产品与真实头像边界	D:\Project\Unity\test synthetic fixture
+代理点 SDK Publish 或绕 OTP	发布是 Owner 人工动作	agent 只准备 calibration build 与读取 Owner 自有结果
+用 PAT 把 private GitHub 伪装成远程 VPM host	listing 与受保护 release asset 下载不是同一个认证契约	先修本地 artifact parity，不设计新商店
+“避开 SaoMoLa 三串指纹就算防盗”	检测表不测 AAO/TTT/L2 劳动，也不测 watermark 证据	build report 展示实际 friction 与 attribution status
+E. 给实现代理的下一刀
+
+下面三刀是互斥分支，不要一次同时开。
+
+1. 当前默认推荐：slice-reference-closure-fixture
+
+不需要 Owner 点 SDK，信息增益最高。
+
+Definition of Done：
+
+OVA_ReferenceAvatar 覆盖真实分件、MMD Body、重复 Chest、SyncedLayer、object curves、PhysBone/Contacts/PPtr；
+build report 对 expected manifest 全绿；
+referenceErrors=0；
+unreasonedSensitiveResiduals=0；
+不写辉夜、不碰 SaoMoLa、不 Publish。
+
+这是当前最合理的第一刀，因为它会决定 idea-02、03、04、05 中哪些是真 gap，哪些已经被现码覆盖。
+
+2. Owner 明确说“我点 SDK”：slice-watermark-upload-calibration
+
+实现代理只准备 calibration avatar、evidence 与 verifier；Owner 人点 Build & Publish。
+
+Definition of Done：
+
+未标记 control 为阴性；
+至少一种 adaptive watermark policy 在作者自有 post-upload artifact 上达到预设置信度；
+可见形变低于验收线；
+明确裁定当前 ±1e-5 是 survives 还是 dies；
+在证实前产品只显示 editor-only-unverified。
+3. Owner 明确说“repair”：repair-vpm-artifact-parity
+
+只修发行链，不顺带加 feature。
+
+Definition of Done：
+
+重跑 pack-vpm.ps1；
+解压后与工作树 content manifest 一致；
+FT、viseme、decoy、i18n.js、pack.js 等当前 shipping 文件全部存在；
+package/listing/source commit/version 一致；
+同一错误无法再次由“旧 zip 自己的 SHA 正确”蒙混过关。
+
+我的排序：先 slice-reference-closure-fixture；Owner 正好能点 SDK 时切 slice-watermark-upload-calibration；只有准备交付安装包时才单独说 repair，执行 repair-vpm-artifact-parity。

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ova-web</title>
+  <link rel="icon" href="/icons/ova-mark.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/ova.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
+  <script type="module">
+    import '@material/web/all.js';
+    window.__ovaM3 = true;
+  </script>
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true">
+    <symbol id="i-mark" viewBox="0 0 32 32" fill="none">
+      <circle class="mark-ring" cx="16" cy="16" r="12.25" stroke="currentColor" stroke-width="1.75"/>
+      <path class="mark-tri" d="M16 8.4 23.4 21.6H8.6Z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="miter"/>
+      <circle class="mark-vtx" cx="16" cy="8.4" r="1.65" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-overview" viewBox="0 0 24 24" fill="none">
+      <rect x="4" y="4" width="7" height="7" stroke="currentColor" stroke-width="1.6"/>
+      <rect x="13" y="4" width="7" height="7" stroke="currentColor" stroke-width="1.6"/>
+      <rect x="4" y="13" width="7" height="7" stroke="currentColor" stroke-width="1.6"/>
+      <rect x="13" y="13" width="7" height="4" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-protect" viewBox="0 0 24 24" fill="none">
+      <rect x="4.5" y="5" width="13" height="3.1" stroke="currentColor" stroke-width="1.6"/>
+      <rect x="6.5" y="10.45" width="13" height="3.1" stroke="currentColor" stroke-width="1.6"/>
+      <rect x="8.5" y="15.9" width="11" height="3.1" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-params" viewBox="0 0 24 24" fill="none">
+      <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="9" cy="7" r="1.7" fill="currentColor"/>
+      <circle cx="15" cy="12" r="1.7" fill="currentColor"/>
+      <circle cx="8" cy="17" r="1.7" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-watermark" viewBox="0 0 24 24" fill="none">
+      <path d="M12 5.5 19 18.5H5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="miter"/>
+      <circle cx="12" cy="5.5" r="1.4" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-attest" viewBox="0 0 24 24" fill="none">
+      <rect x="5" y="4.5" width="14" height="15" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M8.5 12.2 11 14.6l4.5-5.2" stroke="currentColor" stroke-width="1.6" fill="none"/>
+    </symbol>
+    <symbol id="i-reload" viewBox="0 0 24 24" fill="none">
+      <path d="M19 12a7 7 0 1 1-2-4.9" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M17 3.5v4.2h4.2" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-save" viewBox="0 0 24 24" fill="none">
+      <path d="M6 14.5 12 20l6-5.5" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M12 5v14.5" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none">
+      <rect x="8" y="8" width="11" height="11" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M5 16V5h11" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-key" viewBox="0 0 24 24" fill="none">
+      <circle cx="8" cy="12" r="3.2" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M11.2 12H20v2.4M16.2 12v2.4" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-pack" viewBox="0 0 24 24" fill="none">
+      <path d="M7 7.5h10v12H7z" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M9 7.5V5.8c0-.7.9-1.3 3-1.3s3 .6 3 1.3v1.7" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M9.5 12h5M9.5 15h3.5" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-publish" viewBox="0 0 24 24" fill="none">
+      <path d="M12 16V6" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M7.5 10.5 12 6l4.5 4.5" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M5 18h14" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+  </svg>
+
+  <div id="boot-fail" class="boot-fail" hidden></div>
+
+  <div class="app">
+    <nav class="rail" aria-label="ova-web">
+      <div class="brand" title="OVA">
+        <svg class="mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle class="mark-ring" cx="16" cy="16" r="12.25" stroke="currentColor" stroke-width="1.75"/>
+          <path class="mark-tri" d="M16 8.4 23.4 21.6H8.6Z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="miter"/>
+          <circle class="mark-vtx" cx="16" cy="8.4" r="1.65" fill="currentColor"/>
+        </svg>
+      </div>
+      <span class="rail-pill" id="rail-pill" aria-hidden="true"></span>
+      <button type="button" class="dest active" data-page="overview">
+        <span class="indicator"><svg class="ico"><use href="#i-overview"/></svg></span>
+        <span class="dest-label" data-i18n="nav.overview">Overview</span>
+      </button>
+      <button type="button" class="dest" data-page="protect">
+        <span class="indicator"><svg class="ico"><use href="#i-protect"/></svg></span>
+        <span class="dest-label" data-i18n="nav.protect">Protect</span>
+      </button>
+      <button type="button" class="dest" data-page="params" data-expert>
+        <span class="indicator"><svg class="ico"><use href="#i-params"/></svg></span>
+        <span class="dest-label" data-i18n="nav.params">Params</span>
+      </button>
+      <button type="button" class="dest" data-page="watermark">
+        <span class="indicator"><svg class="ico"><use href="#i-watermark"/></svg></span>
+        <span class="dest-label" data-i18n="nav.watermark">Watermark</span>
+      </button>
+      <button type="button" class="dest" data-page="attest" data-expert>
+        <span class="indicator"><svg class="ico"><use href="#i-attest"/></svg></span>
+        <span class="dest-label" data-i18n="nav.attest">Attest</span>
+      </button>
+      <button type="button" class="dest" data-page="pack">
+        <span class="indicator"><svg class="ico"><use href="#i-pack"/></svg></span>
+        <span class="dest-label" data-i18n="nav.pack">Pack</span>
+      </button>
+    </nav>
+
+    <div class="shell">
+      <header class="topbar">
+        <div class="topbar-text">
+          <h1 id="page-title">Overview</h1>
+          <p id="page-sub" class="sub">Live JSON · NDMF will read this on bake</p>
+          <p id="dirty-flag" class="dirty-flag" hidden data-i18n="dirty">Unsaved</p>
+        </div>
+        <div class="topbar-actions">
+          <div class="seg" role="group" aria-label="Language">
+            <button type="button" data-locale="en">EN</button>
+            <button type="button" data-locale="zh-CN">中</button>
+          </div>
+          <div class="seg" role="group" aria-label="Mode">
+            <button type="button" id="mode-normal" data-mode-set="normal" data-i18n="mode.normal">Normal</button>
+            <button type="button" id="mode-expert" data-mode-set="expert" data-i18n="mode.expert">Expert</button>
+          </div>
+          <md-outlined-button id="reload">
+            <svg slot="icon" class="ico"><use href="#i-reload"/></svg>
+            <span data-i18n="action.reload">Reload</span>
+          </md-outlined-button>
+          <md-filled-button id="save">
+            <svg slot="icon" class="ico"><use href="#i-save"/></svg>
+            <span data-i18n="action.save">Save</span>
+          </md-filled-button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="page" id="page-overview">
+          <div class="dash">
+            <div class="dash-id">
+              <div class="dash-kicker" data-i18n="meta.avatar">Avatar</div>
+              <p class="dash-avatar" id="ov-avatar" title="">—</p>
+              <div class="dash-kicker" style="margin-top:0.85rem" data-i18n="meta.fp">Fingerprint</div>
+              <p class="dash-fp mono" id="ov-fp">—</p>
+            </div>
+            <dl class="dash-side">
+              <div class="dash-cell">
+                <dt data-i18n="meta.seed">Seed</dt>
+                <dd id="ov-seed">—</dd>
+              </div>
+              <div class="dash-cell">
+                <dt data-i18n="meta.names">Name length</dt>
+                <dd id="ov-len">—</dd>
+              </div>
+              <div class="dash-cell">
+                <dt data-i18n="meta.tex">Textures</dt>
+                <dd id="ov-tex">—</dd>
+              </div>
+              <div class="dash-cell">
+                <dt data-i18n="meta.attest">Attest</dt>
+                <dd id="ov-attest">—</dd>
+              </div>
+            </dl>
+          </div>
+
+          <p class="path-b" data-i18n="overview.pathB">Path B residual: a viewer must hold plaintext geometry to draw you. GPU harvest is not stopped.</p>
+
+          <div class="report-pair">
+            <article class="card report-block">
+              <h3 data-i18n="overview.sceneTitle">Estimated from scene</h3>
+              <p class="card-lead" data-i18n="overview.sceneLead">Live probe of the open avatar. Not a bake report.</p>
+              <p class="picker-meta" id="ov-scene-decoy">—</p>
+              <div class="layer-list" role="list">
+                <button type="button" class="layer-row" data-page="protect" data-key="hierarchy">
+                  <span class="layer-name" data-i18n="layer.hierarchy">Object names</span>
+                  <span class="layer-id">hierarchy</span>
+                  <span class="layer-stat" id="ov-hierarchy-n">—</span>
+                  <span class="lamp" id="ov-hierarchy"></span>
+                </button>
+                <button type="button" class="layer-row" data-page="protect" data-key="blendshapes">
+                  <span class="layer-name" data-i18n="layer.blendshapes">Blendshapes</span>
+                  <span class="layer-id">shapekey</span>
+                  <span class="layer-stat" id="ov-blendshapes-n">—</span>
+                  <span class="lamp" id="ov-blendshapes"></span>
+                </button>
+                <button type="button" class="layer-row" data-page="protect" data-key="layers">
+                  <span class="layer-name" data-i18n="layer.layers">Animator layers</span>
+                  <span class="layer-id">layers</span>
+                  <span class="layer-stat" id="ov-layers-n">—</span>
+                  <span class="lamp" id="ov-layers"></span>
+                </button>
+                <button type="button" class="layer-row" data-page="protect" data-key="states">
+                  <span class="layer-name" data-i18n="layer.states">State names</span>
+                  <span class="layer-id">states</span>
+                  <span class="layer-stat" id="ov-states-n">—</span>
+                  <span class="lamp" id="ov-states"></span>
+                </button>
+                <button type="button" class="layer-row" data-page="params" data-key="params" data-expert>
+                  <span class="layer-name" data-i18n="layer.params">Parameter names</span>
+                  <span class="layer-id">animator / menu</span>
+                  <span class="layer-stat" id="ov-params-n">—</span>
+                  <span class="lamp" id="ov-params"></span>
+                </button>
+                <button type="button" class="layer-row" data-page="protect" data-key="assets">
+                  <span class="layer-name" data-i18n="layer.assets">Cloned asset names</span>
+                  <span class="layer-id">mesh / clip / mat / tex</span>
+                  <span class="layer-stat" id="ov-assets-n">—</span>
+                  <span class="lamp" id="ov-assets"></span>
+                </button>
+                <button type="button" class="layer-row" data-page="watermark" data-key="watermark">
+                  <span class="layer-name" data-i18n="layer.watermark">Vertex watermark</span>
+                  <span class="layer-id">amplitude</span>
+                  <span class="layer-stat" id="ov-watermark-n">—</span>
+                  <span class="lamp" id="ov-watermark"></span>
+                </button>
+                <button type="button" class="layer-row" data-page="attest" data-key="attest" data-expert>
+                  <span class="layer-name" data-i18n="layer.attest">Remote attest</span>
+                  <span class="layer-id">github / gitee</span>
+                  <span class="layer-stat" id="ov-attest-n">—</span>
+                  <span class="lamp" id="ov-attest-on"></span>
+                </button>
+              </div>
+            </article>
+
+            <article class="card report-block">
+              <h3 data-i18n="overview.bakeTitle">Last NDMF clone</h3>
+              <p class="card-lead" data-i18n="overview.bakeLead">Measured on the last Optimizing clone. Empty until you bake.</p>
+              <p id="ov-bake-empty" class="bake-empty" data-i18n="overview.neverBaked">Not baked yet / report stale</p>
+              <dl id="ov-bake-grid" class="bake-grid" hidden>
+                <div class="bake-cell">
+                  <dt data-i18n="overview.bakeAvatar">Avatar</dt>
+                  <dd id="ov-bake-avatar">—</dd>
+                </div>
+                <div class="bake-cell">
+                  <dt data-i18n="overview.bakeAt">When (UTC)</dt>
+                  <dd id="ov-bake-at" class="mono">—</dd>
+                </div>
+                <div class="bake-cell">
+                  <dt data-i18n="overview.decoy">Decoys</dt>
+                  <dd id="ov-bake-decoy" class="mono">—</dd>
+                </div>
+                <div class="bake-cell">
+                  <dt data-i18n="overview.visemeMiss">Viseme miss</dt>
+                  <dd id="ov-bake-viseme" class="mono">—</dd>
+                </div>
+                <div class="bake-cell">
+                  <dt data-i18n="overview.smr">SMR orig / clone</dt>
+                  <dd id="ov-bake-smr" class="mono">—</dd>
+                </div>
+                <div class="bake-cell">
+                  <dt data-i18n="overview.bodyGo">Body transform</dt>
+                  <dd id="ov-bake-body">—</dd>
+                </div>
+                <div class="bake-cell">
+                  <dt data-i18n="overview.paramRenamed">Parameters renamed</dt>
+                  <dd id="ov-bake-params" class="mono">—</dd>
+                </div>
+                <div class="bake-cell">
+                  <dt data-i18n="overview.wmMeshes">Watermark meshes</dt>
+                  <dd id="ov-bake-wm-meshes" class="mono">—</dd>
+                </div>
+                <div class="bake-cell">
+                  <dt data-i18n="overview.wmStatus">Watermark status</dt>
+                  <dd id="ov-bake-wm-status" class="mono" data-i18n="overview.wmStatusValue">editor-only-unverified</dd>
+                </div>
+                <div class="bake-cell">
+                  <dt data-i18n="overview.lockFp">Lock fingerprints</dt>
+                  <dd id="ov-bake-lock">—</dd>
+                </div>
+              </dl>
+              <p class="card-lead bake-wm-help" hidden data-i18n="overview.wmStatusHelp">Editor-only. Upload survival is not proven.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="page" id="page-protect" hidden>
+          <article class="card">
+            <h3 data-i18n="protect.global">Global</h3>
+            <div class="field-grid">
+              <md-outlined-text-field id="seed" data-i18n-label="protect.seed" data-i18n-support="protect.seedHelp" label="Seed" type="number" supporting-text="0 = new names every bake"></md-outlined-text-field>
+              <md-outlined-text-field id="nameLength" data-expert data-i18n-label="protect.nameLength" label="Name length" type="number" min="4" max="32"></md-outlined-text-field>
+            </div>
+            <div data-expert>
+            <p class="card-lead" style="margin-top:0.85rem" data-i18n="protect.substrLead">Hierarchy / blendshape tokens stay readable. Animator parameters do not use this list.</p>
+            <p class="picker-meta" id="name-meta">—</p>
+            <div class="chip-row" id="substr-chips"></div>
+            <div class="chip-add">
+              <md-outlined-text-field id="substrAdd" data-i18n-label="protect.addToken" label="Add token"></md-outlined-text-field>
+              <md-outlined-button id="substrAddBtn" type="button"><span data-i18n="protect.add">Add</span></md-outlined-button>
+            </div>
+            <div class="switch-list">
+              <label class="switch-row" for="preserveMmd">
+                <span>
+                  <strong data-i18n="protect.mmd">Keep MMD / Body</strong>
+                  <small data-i18n="protect.mmdHelp">Leave a readable Body mesh name for MMD worlds</small>
+                </span>
+                <md-switch id="preserveMmd" icons></md-switch>
+              </label>
+              <label class="switch-row" for="autoDetectPreserve">
+                <span>
+                  <strong data-i18n="protect.auto">Auto-keep GoGo / FT / OSC / VrcDcc</strong>
+                  <small data-i18n="protect.autoHelp">Dance and face-tracking params stay if parameter obfuscation is on</small>
+                </span>
+                <md-switch id="autoDetectPreserve" icons></md-switch>
+              </label>
+            </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3 data-i18n="protect.names">Name layers</h3>
+            <p class="card-lead" data-i18n="protect.namesLead">Clone-only. A layer moves only when checked.</p>
+            <div class="check-grid">
+              <label class="check-tile" for="obfuscateHierarchy">
+                <md-checkbox id="obfuscateHierarchy"></md-checkbox>
+                <span><strong data-i18n="layer.hierarchy">Object names</strong><small>Hierarchy</small></span>
+              </label>
+              <label class="check-tile" for="obfuscateBlendShapes">
+                <md-checkbox id="obfuscateBlendShapes"></md-checkbox>
+                <span><strong data-i18n="layer.blendshapes">Blendshapes</strong><small>Shape key</small></span>
+              </label>
+              <label class="field" data-expert for="decoyBlendShapeCount">
+                <span data-i18n="protect.decoy">Decoy blendshapes</span>
+                <input id="decoyBlendShapeCount" type="number" min="0" max="32" step="1" value="0" />
+                <small data-i18n="protect.decoyHelp">Junk keys on the clone. 0 = off. Not viseme / FT keep names.</small>
+              </label>
+              <label class="check-tile" for="obfuscateAnimatorLayers">
+                <md-checkbox id="obfuscateAnimatorLayers"></md-checkbox>
+                <span><strong data-i18n="layer.layers">Animator layers</strong><small>Layer</small></span>
+              </label>
+              <label class="check-tile" for="obfuscateStates">
+                <md-checkbox id="obfuscateStates"></md-checkbox>
+                <span><strong data-i18n="layer.states">State names</strong><small>State</small></span>
+              </label>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3 data-i18n="protect.assets">Cloned assets</h3>
+            <label class="switch-row" for="obfuscateClonedNames">
+              <span>
+                <strong data-i18n="protect.assetsName">Soup cloned mesh / clip / mat / tex / audio names</strong>
+                <small data-i18n="protect.assetsHelp">Source files on disk stay readable</small>
+              </span>
+              <md-switch id="obfuscateClonedNames" icons></md-switch>
+            </label>
+            <label class="switch-row" for="obfuscateParams">
+              <span>
+                <strong data-i18n="params.obfuscate">Obfuscate parameter names</strong>
+                <small data-i18n="params.obfuscateHelp">Expression menus follow. Pins / extras / auto table still keep.</small>
+              </span>
+              <md-switch id="obfuscateParams" icons></md-switch>
+            </label>
+          </article>
+
+          <article class="card">
+            <h3 data-i18n="protect.tex">Textures</h3>
+            <md-outlined-select id="textureMode" data-i18n-label="protect.texMode" data-i18n-support="protect.texHelp" label="Mode" supporting-text="compose = stack ShellProtector / TTT / Ajisai" menu-positioning="popover">
+              <md-select-option value="compose">
+                <div slot="headline">compose</div>
+              </md-select-option>
+              <md-select-option value="off">
+                <div slot="headline">off</div>
+              </md-select-option>
+              <md-select-option value="ova">
+                <div slot="headline" data-i18n="protect.texOva">ova (not implemented)</div>
+              </md-select-option>
+            </md-outlined-select>
+            <label class="switch-row" for="encryptSettingsAtRest" data-expert>
+              <span>
+                <strong data-i18n="protect.atRest">Encrypt settings at rest</strong>
+                <small data-i18n="protect.atRestHelp">Flag exists; not wired. Expert only.</small>
+              </span>
+              <md-switch id="encryptSettingsAtRest" icons></md-switch>
+            </label>
+          </article>
+        </section>
+
+        <section class="page" id="page-params" hidden data-expert>
+          <article class="card">
+            <h3 data-i18n="params.title">Animator / VRC parameters</h3>
+            <p class="card-lead" data-i18n="params.extraLead">Extra keep substrings (any contains). Separate from hierarchy tokens.</p>
+            <div class="chip-row" id="extra-chips"></div>
+            <div class="chip-add">
+              <md-outlined-text-field id="extraAdd" data-i18n-label="params.extraAdd" label="Add substring"></md-outlined-text-field>
+              <md-outlined-button id="extraAddBtn" type="button"><span data-i18n="protect.add">Add</span></md-outlined-button>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3 data-i18n="params.pins">Pinned keep</h3>
+            <p class="card-lead" id="param-note">Open ova-web from Unity to read the current avatar.</p>
+            <div class="picker-bar">
+              <md-outlined-text-field id="paramSearch" data-i18n-label="params.search" label="Search"></md-outlined-text-field>
+              <div class="filters" role="tablist">
+                <button type="button" class="filter-btn active" data-filter="all" data-i18n="params.filterAll">All</button>
+                <button type="button" class="filter-btn" data-filter="none" data-i18n="params.filterRename">Will rename</button>
+                <button type="button" class="filter-btn" data-filter="keep" data-i18n="params.filterKeep">Kept</button>
+                <button type="button" class="filter-btn" data-filter="pin" data-i18n="params.filterPin">Pinned</button>
+              </div>
+            </div>
+            <p class="picker-meta" id="param-meta">—</p>
+            <div class="chip-row" id="pin-chips"></div>
+            <div class="param-list" id="param-list"></div>
+            <div class="inline-actions">
+              <md-outlined-button id="paramRefresh" type="button"><span data-i18n="params.refresh">Re-read scene</span></md-outlined-button>
+            </div>
+          </article>
+        </section>
+
+        <section class="page" id="page-watermark" hidden>
+          <article class="card">
+            <h3 data-i18n="wm.title">Vertex watermark</h3>
+            <label class="switch-row" for="watermarkEnabled">
+              <span>
+                <strong data-i18n="wm.enable">Nudge vertices</strong>
+                <small data-i18n="wm.enableHelp">Keyed basis offset — attribution, not a lock</small>
+              </span>
+              <md-switch id="watermarkEnabled" icons></md-switch>
+            </label>
+            <md-outlined-text-field id="watermarkAmp" data-i18n-label="wm.amp" data-i18n-support="wm.ampHelp" label="Amplitude" type="number" step="0.000001" supporting-text="Default 1e-5."></md-outlined-text-field>
+            <div class="amp-row" data-expert>
+              <button type="button" data-amp="0.000001">1e-6</button>
+              <button type="button" data-amp="0.00001">1e-5</button>
+              <button type="button" data-amp="0.0001">1e-4</button>
+            </div>
+          </article>
+        </section>
+
+        <section class="page" id="page-attest" hidden data-expert>
+          <article class="card">
+            <h3 data-i18n="attest.place">Registry</h3>
+            <p class="card-lead" data-i18n="attest.placeLead">The repo only gets fingerprint JSON. PAT never enters git or settings.json.</p>
+            <div class="provider-row" role="radiogroup" aria-label="Attest provider">
+              <label class="provider-card">
+                <md-radio name="provider" value="off"></md-radio>
+                <span data-i18n="attest.off">Off</span>
+              </label>
+              <label class="provider-card">
+                <md-radio name="provider" value="github"></md-radio>
+                <img src="/icons/github.svg" width="18" height="18" alt="" />
+                <span>GitHub</span>
+              </label>
+              <label class="provider-card">
+                <md-radio name="provider" value="gitee"></md-radio>
+                <img src="/icons/gitee.svg" width="18" height="18" alt="" />
+                <span>Gitee</span>
+              </label>
+            </div>
+            <div class="field-grid">
+              <md-outlined-text-field id="attestOwner" data-i18n-label="attest.owner" label="Owner"></md-outlined-text-field>
+              <md-outlined-text-field id="attestRepo" data-i18n-label="attest.repo" label="Repository"></md-outlined-text-field>
+              <md-outlined-text-field id="attestBranch" data-i18n-label="attest.branch" label="Branch"></md-outlined-text-field>
+              <md-outlined-text-field id="attestPath" data-i18n-label="attest.path" data-i18n-support="attest.pathHelp" label="Path" supporting-text="Default ova-attest.json"></md-outlined-text-field>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3 data-i18n="attest.token">Local token</h3>
+            <p class="card-lead" data-i18n="attest.tokenLead">Library/OVA/secrets.json · the API reports presence, never the secret.</p>
+            <md-outlined-text-field id="attestToken" data-i18n-label="attest.pat" data-i18n-support="attest.patHelp" label="PAT" type="password" autocomplete="off" supporting-text="Needs write access"></md-outlined-text-field>
+            <div class="inline-actions">
+              <md-filled-tonal-button id="saveToken">
+                <svg slot="icon" class="ico"><use href="#i-key"/></svg>
+                <span data-i18n="attest.write">Write locally</span>
+              </md-filled-tonal-button>
+              <md-text-button id="clearToken"><span data-i18n="attest.clear">Clear</span></md-text-button>
+              <span id="secret-state" class="secret-state">—</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3 data-i18n="attest.fp">Fingerprint</h3>
+            <p class="card-lead" data-i18n="attest.fpLead">ova-fp-v1 · seed + name length + watermark</p>
+            <div class="fingerprint" id="fingerprint">—</div>
+            <div class="inline-actions">
+              <md-outlined-button id="copyFp">
+                <svg slot="icon" class="ico"><use href="#i-copy"/></svg>
+                <span data-i18n="attest.copy">Copy</span>
+              </md-outlined-button>
+              <md-filled-button id="publishAttest">
+                <svg slot="icon" class="ico"><use href="#i-publish"/></svg>
+                <span data-i18n="attest.publish">Try publish</span>
+              </md-filled-button>
+            </div>
+            <pre class="would-post" id="would-post" hidden></pre>
+          </article>
+        </section>
+
+        <section class="page" id="page-pack" hidden>
+          <article class="card">
+            <h3 data-i18n="pack.note">Project note</h3>
+            <p class="card-lead" data-i18n="pack.noteHelp">One paragraph for the model: what this avatar is. Not a Unity dump.</p>
+            <textarea id="projectNote" data-i18n-placeholder="pack.notePh" placeholder="Throwaway SDK Robot Avatar PC. Not Kaguya."></textarea>
+            <div class="pack-actions">
+              <md-filled-button id="packCopy" type="button"><span data-i18n="pack.copy">Copy brief</span></md-filled-button>
+              <md-outlined-button id="packZip" type="button"><span data-i18n="pack.zip">Download zip</span></md-outlined-button>
+              <md-outlined-button id="packImport" type="button"><span data-i18n="pack.import">Apply reply</span></md-outlined-button>
+            </div>
+            <p class="pack-how" data-i18n="pack.how">The zip is English on purpose. Reply with a fenced ova-params-v1 JSON.</p>
+          </article>
+          <article class="card" data-expert>
+            <h3>settings.json</h3>
+            <textarea id="rawJson" class="raw-json" spellcheck="false"></textarea>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog id="import-dlg" class="dlg">
+    <h3 data-i18n="pack.import">Apply reply</h3>
+    <textarea id="importPaste" class="import-box" data-i18n-placeholder="pack.importPh" placeholder="Paste an ova-params-v1 JSON block"></textarea>
+    <div class="dlg-actions">
+      <md-text-button id="importClose" type="button"><span data-i18n="pack.close">Close</span></md-text-button>
+      <md-filled-button id="importApply" type="button"><span data-i18n="pack.apply">Apply</span></md-filled-button>
+    </div>
+  </dialog>
+  <div id="snack" class="snack" hidden><span id="snack-text"></span></div>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

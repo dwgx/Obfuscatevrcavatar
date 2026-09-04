@@ -1,0 +1,25 @@
+{
+  "name": "dev.ova.protection.editor",
+  "rootNamespace": "Ova.Editor",
+  "references": [
+    "dev.ova.protection",
+    "nadena.dev.ndmf",
+    "nadena.dev.ndmf.runtime",
+    "VRC.SDK3A",
+    "VRC.SDKBase"
+  ],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [
+    {
+      "name": "com.vrchat.avatars",
+      "expression": "",
+      "define": "OVA_VRCSDK3"
+    }
+  ],
+  "noEngineReferences": false
+}

@@ -1,0 +1,41 @@
+{
+  "generated": "2026-09-04",
+  "note": "Primary URLs. Do not treat blogs as 1p. Local paths are this Windows estate.",
+  "ova": {
+    "disk": "D:\\Project\\Obfuscatevrcavatar",
+    "github": "https://github.com/dwgx/Obfuscatevrcavatar",
+    "vpm_id": "dev.ova.protection",
+    "head_at_pack": "8a3d32cf3e6aa205d0864411e639f9d839e6e096"
+  },
+  "local": {
+    "throwaway_unity": "D:\\Project\\Unity\\test",
+    "kaguya_frozen": "D:\\Project\\Unity\\kaguya",
+    "il2cpp_re": "D:\\Project\\vrchat-il2cpp-re",
+    "playbook": "D:\\Project\\vrchat-il2cpp-re\\output\\p2_research\\avatar_ripping_defense_playbook.md",
+    "saomola": "D:\\Project\\SaoMoLa",
+    "saomola_readme": "D:\\Project\\SaoMoLa\\README.md"
+  },
+  "peers": {
+    "avatar_obfuscator": "https://github.com/cocokoishi/AvatarObfuscator",
+    "avatar_obfuscator_release_049": "https://github.com/cocokoishi/AvatarObfuscator/releases/download/v0.4.9/dev.cocokoishi.avatar-obfuscator-0.4.9.unitypackage",
+    "esska": "https://github.com/Ess-Ka/EsskaAV3Obfuscator",
+    "kanna_antirip": "https://github.com/PlagueVRC/AntiRip",
+    "kanna_faq": "https://raw.githubusercontent.com/PlagueVRC/AntiRip/master/Readme/FAQ.md",
+    "gtavacrypt": "https://github.com/rygo6/GTAvaCrypt",
+    "dexprotect_jinxxy": "https://jinxxy.com/Dextro/DexProtect",
+    "shellprotector": "https://github.com/Shell4026/ShellProtector",
+    "shellprotector_osc": "https://github.com/Shell4026/ShellProtectorOSC",
+    "shellprotector_vcc": "https://shell4026.github.io/VCC/",
+    "ajisai_site": "https://ajisaiflow.net/prod/anti-ripping/",
+    "ajisai_booth": "https://booth.pm/ja/items/8329413",
+    "aao": "https://github.com/anatawa12/AvatarOptimizer",
+    "aao_vpm": "https://vpm.anatawa12.com/vpm.json",
+    "ttt": "https://github.com/ReinaS-64892/TexTransTool",
+    "ttt_vpm": "https://vpm.rs64.net/vpm.json",
+    "ndmf": "https://github.com/bdunderscore/ndmf",
+    "lumina": "https://share.lumina.moe/posts/vrchat-anti-ripper/",
+    "liltoon_migrate": "https://lilxyzw.github.io/lilToon/ja_JP/migrate1to2.html",
+    "vcc_listing": "https://vcc.docs.vrchat.com/guides/create-listing/",
+    "vcc_community_repos": "https://vcc.docs.vrchat.com/guides/community-repositories/"
+  }
+}

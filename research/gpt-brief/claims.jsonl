@@ -1,0 +1,22 @@
+{"id":"law-0","claim":"A client that draws an avatar must hold plaintext geometry in process/GPU.","status":"accepted","source":"vrchat-il2cpp-re playbook §0"}
+{"id":"path-b-open","claim":"Author-layer NDMF cannot close live Mesh/GPU harvest.","status":"accepted","source":"playbook §3 residual; CAPABILITY.md"}
+{"id":"three-keys","claim":"Viewer cache AES, UnityPlayer bundle cipher, and author OSC/shader unlock are three different keys.","status":"accepted","source":"docs/THREAT-MODEL.md"}
+{"id":"bundle-cipher-not-photon","claim":"Avatar bundle cipher is UnityPlayer EncryptionKey*, not Photon/libsodium/vrc_fast_crypto.","status":"accepted","source":"playbook §2.2"}
+{"id":"ova-l2-l7","claim":"OVA v0.2 implements clone-only L2 names/params/assets plus keyed L7 watermark; L1 via compose AAO/TTT.","status":"verified","source":"Packages/dev.ova.protection Editor passes"}
+{"id":"no-lock-fingerprint","claim":"OVA package *.cs does not contain _BitKey, DexProtect, or _IsLocked.","status":"verified","source":"grep 2026-09-04 full review"}
+{"id":"ft-token","claim":"FT keep is token-boundary so blink_left and Gift are not kept.","status":"verified","source":"OvaNameKeep.HasTokenBoundary; bake-w2 blink_left=False"}
+{"id":"viseme-slots","claim":"Descriptor viseme slots match clone mesh after bake (visemeMiss=0).","status":"verified","source":"Temp/bake-w2.txt bake-w3.txt"}
+{"id":"aao-merge-robot","claim":"Robot throwaway origSmr 2 -> cloneSmr 1.","status":"verified","source":"bake dumps; Editor.log AAO metrics"}
+{"id":"ttt-atlas-robot","claim":"Two 2048 Body maps become one shared souped 2048 on clone mats.","status":"verified","source":"bake-w2/w3 cloneTex"}
+{"id":"decoy-8","claim":"decoyBlendShapeCount=8 added 8 shapes (23->31) on merged Robot mesh.","status":"verified","source":"bake-w3"}
+{"id":"body-after-aao","claim":"MMD Body GameObject name is not present on compose clone (BodyGo=False).","status":"observed","source":"bake-w2/w3 BodyGo"}
+{"id":"preview-vs-bake-params","claim":"ova-web overview can show 0/8 params to rename while bake logs renamed=2.","status":"observed","source":"GUI smoke + bake logs"}
+{"id":"sdk-upload","claim":"Human SDK Publish and author-unpack of a live .vrca are not done.","status":"open","source":"Editor.log emailOtp failed; no Building Avatar"}
+{"id":"watermark-upload","claim":"Watermark survival after VRChat compress is unverified.","status":"open","source":"GOAL.md L7"}
+{"id":"listing-zip-stale","claim":"Local VPM zip 0.2.0 does not contain working-tree viseme/FT/decoy/wwwroot.","status":"open","source":"REVIEW-2026-09-04-full.md F2"}
+{"id":"attest-hop-b","claim":"GitHub/Gitee fingerprint publish is parked (501).","status":"parked","source":"docs/ATTEST.md Owner 2026-09-04"}
+{"id":"kanna-no-liltoon","claim":"Kanna/AntiRip supported shaders do not include lilToon.","status":"verified","source":"https://github.com/PlagueVRC/AntiRip README"}
+{"id":"shell-liltoon-234","claim":"ShellProtector README claims lilToon through 2.3.4. Not baked on Kaguya.","status":"observed","source":"ShellProtector README.ENG.md"}
+{"id":"detector-path-a","claim":"SaoMoLa detector table: after platform decrypt, lock packs stay scrambled/invisible; unprotected packs fully usable.","status":"observed","source":"SaoMoLa README protection table (classes only)"}
+{"id":"no-kaguya-install","claim":"OVA must not be installed into frozen D:\\Project\\Unity\\kaguya.","status":"accepted","source":"AGENTS.md stop line"}
+{"id":"private-git","claim":"Product git is private dwgx/Obfuscatevrcavatar; control-plane files untracked.","status":"verified","source":"gh repo view isPrivate true; HEAD 8a3d32c"}

@@ -1,0 +1,35 @@
+{
+  "name": "OVA (local listing example)",
+  "id": "dev.ova.vpm",
+  "url": "https://github.com/dwgx/Obfuscatevrcavatar",
+  "author": {
+    "name": "OVA"
+  },
+  "description": "Example VPM listing. Copy to source.json and run scripts/pack-vpm.ps1, or install the GitHub Release zip / UPM from disk. Do not commit a machine file:// URL.",
+  "packages": [
+    {
+      "name": "dev.ova.protection",
+      "releases": [
+        {
+          "name": "dev.ova.protection",
+          "displayName": "OVA Avatar Protection",
+          "version": "0.3.0-pre.1",
+          "unity": "2022.3",
+          "description": "NDMF blue-team avatar obfuscation + ova-web. Clone-only names/params/watermark. Not a ripper.",
+          "vrchatVersion": "2022.3.22",
+          "author": {
+            "name": "OVA"
+          },
+          "license": "UNLICENSED",
+          "keywords": ["vrchat", "ndmf", "anti-rip", "obfuscation"],
+          "vpmDependencies": {
+            "nadena.dev.ndmf": ">=1.14.0",
+            "com.vrchat.avatars": ">=3.5.0"
+          },
+          "url": "https://github.com/dwgx/Obfuscatevrcavatar/releases/download/v0.3.0-pre.1/dev.ova.protection-0.3.0-pre.1.zip",
+          "zipSHA256": "51c1ac238d4f509063e577cd9f6ff65eb63b9efdf1d337473c23be4623750930"
+        }
+      ]
+    }
+  ]
+}

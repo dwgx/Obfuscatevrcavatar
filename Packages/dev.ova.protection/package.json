@@ -1,0 +1,17 @@
+{
+  "name": "dev.ova.protection",
+  "displayName": "OVA Avatar Protection",
+  "version": "0.3.0-pre.1",
+  "unity": "2022.3",
+  "description": "NDMF blue-team avatar obfuscation + ova-web. Clone-only names/params/watermark. Not a ripper.",
+  "vrchatVersion": "2022.3.22",
+  "author": {
+    "name": "OVA"
+  },
+  "license": "UNLICENSED",
+  "keywords": ["vrchat", "ndmf", "anti-rip", "obfuscation"],
+  "vpmDependencies": {
+    "nadena.dev.ndmf": ">=1.14.0",
+    "com.vrchat.avatars": ">=3.5.0"
+  }
+}

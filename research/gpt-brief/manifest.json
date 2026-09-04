@@ -1,0 +1,29 @@
+{
+  "name": "ova-gpt-pack",
+  "created": "2026-09-04",
+  "purpose": "Read-only brief for GPT 5.6 Sol Ultra Pro to propose blue-team ideas. Not an exploit kit.",
+  "root": "D:/Project/Obfuscatevrcavatar/.agent/gpt-pack",
+  "git": "untracked (.agent/)",
+  "files": [
+    "00-README.md",
+    "01-PROMPT.md",
+    "02-ova-now.md",
+    "03-theory.md",
+    "04-pipeline.md",
+    "05-evidence.md",
+    "06-peers.md",
+    "07-il2cpp-re.md",
+    "08-saomola-classes.md",
+    "09-questions.md",
+    "sources.json",
+    "claims.jsonl",
+    "manifest.json"
+  ],
+  "do_not_include": [
+    "SaoMoLa source/scripts/drivers",
+    "playbook RVA hook cookbook as a recipe",
+    "Library/OVA/secrets.json",
+    "chat jsonl of other products",
+    "Kaguya scene"
+  ]
+}
